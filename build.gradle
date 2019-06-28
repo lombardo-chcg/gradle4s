@@ -35,6 +35,10 @@ dependencies {
     runtime "org.apache.logging.log4j:log4j-core:$log4jVersion"
     runtime "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
 
+    // libraries
+    compile "dev.zio:zio_$scalacVersion:1.0.0-RC8-12"
+    compile "com.lihaoyi:ammonite-ops_$scalacVersion:1.6.5"
+
     // test
     testCompile "org.scalatest:scalatest_$scalacVersion:3.0.1"
     testRuntime "org.pegdown:pegdown:1.4.2" // used by scalatest plugin to generate html reports
