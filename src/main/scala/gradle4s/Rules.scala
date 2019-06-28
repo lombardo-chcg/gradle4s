@@ -6,8 +6,8 @@ import zio.{IO, Task}
 import scala.reflect.internal.SymbolTable
 
 object Rules {
-  private val projectNameMatcher = """^[a-zA-Z0-9\-\\.]*$""".r
-  private val projectNameErrorMessage = "Invalid project name.  Allowed characters are a-z, A-Z, 0-9 and hyphens.  ex: my-new-project"
+  private val projectNameMatcher = """^[a-zA-Z0-9\-\_\\.]*$""".r
+  private val projectNameErrorMessage = "Invalid project name.  Allowed characters are a-z, A-Z, 0-9, hyphens and underscores.  ex: my-new-project, my_project"
 
   private val packageNameMatcher = """^[a-z][a-z0-9_]*(\.*[a-z][a-z0-9_]+)+[0-9a-z_]$""".r
   private val packageNameErrorMessage = "Invalid package name.  Must be all-lowercase ASCII letters and cannot start with a reserved identifier."

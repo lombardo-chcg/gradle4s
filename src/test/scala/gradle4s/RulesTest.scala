@@ -10,7 +10,8 @@ class RulesTest extends FlatSpec with Matchers {
   val pkgExpectedErr = "Package name cannot contain Scala or Java reserved terms"
 
   "Rules" should "validate project names" in {
-    assertSuccess("shapeless", Rules.validProjectName("shapeless"))
+    List("shapeless", "shapeless_underscores", "shapeless-hyphen")
+      .foreach { s => assertSuccess(s, Rules.validProjectName(s)) }
     assertFails(expectedError = projectExpectedError,  Rules.validProjectName("shapeless with spaces"))
   }
 
