@@ -15,7 +15,9 @@ class RulesTest extends FlatSpec with Matchers {
   }
 
   it should "validate package names" in {
-    assertSuccess("dev.zio", Rules.validProjectName("dev.zio"))
+    assertSuccess("dev.zio", Rules.validatePackageName("dev.zio"))
+    assertSuccess("shapeless", Rules.validatePackageName("shapeless"))
+    assertFails(expectedError = "Invalid package name",  Rules.validatePackageName("shapeless with spaces"))
     assertFails(expectedError = pkgExpectedErr, Rules.validatePackageName("invalid.with.dots"))
   }
 

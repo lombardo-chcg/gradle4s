@@ -1,19 +1,19 @@
 package gradle4s
 
-import gradle4s.model.{FileExistsError, UserRequest}
+import gradle4s.model.{AppError, FileExistsError, UserRequest}
 import zio._
 import zio.console._
 
-object MyApp extends App {
+object Main extends App {
 
   def run(args: List[String]) =
     getUserRequest.fold(
       // exit code 0 for all because gradle cli hijacks error code results and displays noisy output
       {
-        case th => println(th.getMessage); 0
+        case th: AppError => println(th.getMessage); 0
         case e => { println(e.getMessage + Option(e.getCause).getOrElse(" No cause provided") + ".  Stacktrace:") ; e.printStackTrace(); 0}
       },
-      _ => 0
+      _ => { println("Success"); 0 }
     )
 
   val getUserRequest: ZIO[Console, Throwable, UserRequest] =

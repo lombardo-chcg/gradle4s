@@ -16,6 +16,11 @@ shadowJar {
     baseName = "gradle4s"
 }
 
+run {
+    systemProperties System.getProperties()
+    standardInput = System.in
+}
+
 repositories {
     mavenCentral()
 }

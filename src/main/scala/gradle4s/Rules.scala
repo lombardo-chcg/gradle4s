@@ -9,8 +9,8 @@ object Rules {
   private val projectNameMatcher = """^[a-zA-Z0-9\-\\.]*$""".r
   private val projectNameErrorMessage = "Invalid project name.  Allowed characters are a-z, A-Z, 0-9 and hyphens.  ex: my-new-project"
 
-  private val packageNameMatcher= """^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]+)+[0-9a-z_]$""".r
-  private val packageNameErrorMessage = "Invalid package name.  Must be all-lowercase ASCII letters and cannot start with a reserved identifier.  \n e.g.: com.github.me, com.7up.you"
+  private val packageNameMatcher = """^[a-z][a-z0-9_]*(\.*[a-z][a-z0-9_]+)+[0-9a-z_]$""".r
+  private val packageNameErrorMessage = "Invalid package name.  Must be all-lowercase ASCII letters and cannot start with a reserved identifier."
 
   private def reservedWordError(w: String) = s"Package name cannot contain Scala or Java reserved terms. Illegal term: [$w]"
   private val st: SymbolTable = scala.reflect.runtime.universe.asInstanceOf[scala.reflect.internal.SymbolTable]
