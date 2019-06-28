@@ -5,7 +5,7 @@ import ammonite.ops._
 import zio.{IO, Task}
 
 object FileSys {
-  private val templateDir = pwd/"sample-template"
+  private val templateDir = pwd/"basic-template"
   private val parentDir: ops.Path = pwd/up
 
   def defaultPath: ops.Path = parentDir
