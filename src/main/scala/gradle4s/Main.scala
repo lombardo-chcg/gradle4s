@@ -8,15 +8,16 @@ object Main extends App {
   val program = for {
     u  <- getUserRequest
     _  <- copyTemplate(u)
+    _  <- runBuild(u)
   } yield u
 
   def run(args: List[String]) = program.fold(
-      // exit code 0 for all because gradle cli hijacks error code results and displays noisy output
       {
+        // exit code 0 for all because Gradle CLI hijacks error code results and displays noisy output
         case th: AppError => println(th.getMessage); 0
         case e => { println(e.getMessage + Option(e.getCause).getOrElse(" No cause provided") + ".  Stacktrace:") ; e.printStackTrace(); 0}
       },
-      _ => { println("Success"); 0 }
+      r => { println(s"Success.\n\nTo begin using: \n\ncd ${r.path}"); 0 }
     )
 
   def getUserRequest: ZIO[Console, Throwable, UserRequest] =
@@ -38,9 +39,15 @@ object Main extends App {
 
   def copyTemplate(u: UserRequest): ZIO[Console, Throwable, UserRequest] =
     for {
-      _   <- putStrLn(s"creating new Scala Gradle project at (${u.path})")
+      _   <- putStrLn(s"Creating new Scala Gradle project at (${u.path})...")
       _   <- FileSys.cpTemplate(u.path)
       _   <- TemplateOps.transform(u)
       _   <- if (u.packageName != Rules.defaultPkg) TemplateOps.moveSrcFiles(u) else IO.succeed(u)
+      _   <- putStrLn("Project created.")
     } yield u
+
+  def runBuild(u: UserRequest) = for {
+    _ <- putStrLn(s"Running a sample build...")
+    _ <- FileSys.runShellCommand(u.path, Array("./gradlew", "check"))
+  } yield ()
 }
