@@ -15,4 +15,10 @@ object FileSys {
   def fileExists(req: ops.Path): Task[Boolean] = IO.effect(exists(req))
 
   def cpTemplate(path: os.Path): Task[Unit] = IO.effect(cp(templateDir, path))
+
+  def runShellCommand(path: os.Path, cmd: Array[String]): Task[Unit] = IO.effect {
+    implicit val p = path
+    val command = Shellable(cmd)
+    Shellout.%(command)
+  }
 }
