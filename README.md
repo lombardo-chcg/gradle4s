@@ -1,14 +1,16 @@
 # gradle4s
 
-Like [giter8](https://github.com/foundweekends/giter8) but with Gradle.
+Scala/Gradle Project Scaffolding Tool.  Outputs a project directory bootstrapped with:
+
+* Gradle 9.4
+* Scala 2.13
+* `shadowJar` plugin for bundling fat JARs
+* `log4j2` backend with bindings and config so you can log immediately
+* `scalatest`
+* streamlined `Dockerfile` to send your fat JAR to the cloud
 
 ## How to use
 
-Clone this project use the run script: `./run.sh`
+Clone this project and use the run script: `./run.sh`
 
-or just execute `./gradlew run --console=plain --quiet`
-
-## Goals: 
-- learn [ZIO](https://github.com/zio/zio)
-- use [Ammonite](https://github.com/lihaoyi/Ammonite) outside a command line context
-- have some fun
+or execute `./gradlew run --console=plain --quiet`
