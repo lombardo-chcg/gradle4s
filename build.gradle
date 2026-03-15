@@ -28,8 +28,8 @@ repositories {
 }
 
 ext {
-    scalaVersion = "2.12.19"
-    scalacVersion = "2.12"
+    scalaVersion = "2.13.18"
+    scalacVersion = "2.13"
     log4jVersion = "2.9.1"
 }
 
@@ -43,14 +43,10 @@ dependencies {
     runtimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
 
     // libraries
-    implementation "dev.zio:zio_$scalacVersion:1.0.0-RC8-12"
-    implementation "com.lihaoyi:ammonite-ops_$scalacVersion:1.6.5"
+    implementation "dev.zio:zio_$scalacVersion:1.0.18"
+    implementation "com.lihaoyi:ammonite-ops_$scalacVersion:2.4.1"
 
     // test
-    testImplementation "org.scalatest:scalatest_$scalacVersion:3.0.1"
-    testRuntimeOnly "org.pegdown:pegdown:1.6.0" // used by scalatest plugin to generate html reports
-}
-
-test {
-    jvmArgs "--add-opens", "java.base/java.lang=ALL-UNNAMED"
+    testImplementation "org.scalatest:scalatest_$scalacVersion:3.2.19"
+    testRuntimeOnly "com.vladsch.flexmark:flexmark-all:0.64.8" // used by scalatest plugin to generate html reports
 }

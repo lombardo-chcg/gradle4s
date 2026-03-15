@@ -1,10 +1,11 @@
 package gradle4s
 
-import org.scalatest.{FlatSpec, Matchers}
-import zio.{DefaultRuntime, ZIO}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import zio.{Runtime, ZIO}
 
-class RulesTest extends FlatSpec with Matchers {
-  val runtime = new DefaultRuntime {}
+class RulesTest extends AnyFlatSpec with Matchers {
+  val runtime = Runtime.default
 
   val projectExpectedError = "Invalid project name"
   val pkgExpectedErr = "Package name cannot contain Scala or Java reserved terms"

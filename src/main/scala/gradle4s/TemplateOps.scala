@@ -6,7 +6,7 @@ import ammonite.ops._
 import zio._
 import zio.console._
 
-object TemplateOps {
+object TTemplateOps {
   val PROJECT_NAME_PLACEHOLDER = "scala-gradle-starter"
   val PACKAGE_NAME_PLACEHOLDER = "com\\.starter"
   val ignoredFileSet = Set("gradlew", "gradlew.bat", "gradle-wrapper.jar", "gradle-wrapper.properties")

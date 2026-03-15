@@ -14,10 +14,10 @@ object Main extends App {
   def run(args: List[String]) = program.fold(
       {
         // exit code 0 for all because Gradle CLI hijacks error code results and displays noisy output
-        case th: AppError => println(th.getMessage); 0
-        case e => { println(e.getMessage + Option(e.getCause).getOrElse(" No cause provided") + ".  Stacktrace:") ; e.printStackTrace(); 0}
+        case th: AppError => println(th.getMessage); ExitCode.success
+        case e => { println(e.getMessage + Option(e.getCause).getOrElse(" No cause provided") + ".  Stacktrace:") ; e.printStackTrace(); ExitCode.success}
       },
-      r => { println(s"Success.\n\nTo begin using: \n\ncd ${r.path}"); 0 }
+      r => { println(s"Success.\n\nTo begin using: \n\ncd ${r.path}"); ExitCode.success }
     )
 
   def getUserRequest: ZIO[Console, Throwable, UserRequest] =
