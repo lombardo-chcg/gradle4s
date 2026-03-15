@@ -1,24 +1,20 @@
 package gradle4s
 
-import ammonite.ops
-import ammonite.ops._
 import zio.{IO, Task}
 
 object FileSys {
-  private val templateDir = pwd/"basic-template"
-  private val parentDir: ops.Path = pwd/up
+  private val templateDir = os.pwd / "basic-template"
+  private val parentDir: os.Path = os.pwd / os.up
 
-  def defaultPath: ops.Path = parentDir
+  def defaultPath: os.Path = parentDir
 
-  def toPath(s: String): Task[ops.Path] = IO.effect(Path(s))
+  def toPath(s: String): Task[os.Path] = IO.effect(os.Path(s))
 
-  def fileExists(req: ops.Path): Task[Boolean] = IO.effect(exists(req))
+  def fileExists(req: os.Path): Task[Boolean] = IO.effect(os.exists(req))
 
-  def cpTemplate(path: os.Path): Task[Unit] = IO.effect(cp(templateDir, path))
+  def cpTemplate(path: os.Path): Task[Unit] = IO.effect(os.copy(templateDir, path))
 
   def runShellCommand(path: os.Path, cmd: Array[String]): Task[Unit] = IO.effect {
-    implicit val p = path
-    val command = Shellable(cmd)
-    Shellout.%(command)
+    os.proc(cmd).call(cwd = path)
   }
 }

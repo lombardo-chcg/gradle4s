@@ -1,7 +1,7 @@
 package gradle4s
 
-import zio.{IO, Task, UIO, ZIO}
 import zio.console.{Console, getStrLn, putStr}
+import zio.{IO, Task, UIO, ZIO}
 
 object ConsoleOps {
   def promptUser[T](prompt: String, default: T, transformer: String => Task[T]): ZIO[Console, Throwable, T] =

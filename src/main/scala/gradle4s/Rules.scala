@@ -13,6 +13,7 @@ object Rules {
   private val packageNameErrorMessage = "Invalid package name.  Must be all-lowercase ASCII letters and cannot start with a reserved identifier."
 
   private def reservedWordError(w: String) = s"Package name cannot contain Scala or Java reserved terms. Illegal term: [$w]"
+
   private val st: SymbolTable = scala.reflect.runtime.universe.asInstanceOf[scala.reflect.internal.SymbolTable]
   private val reservedWords: Set[String] = (st.nme.keywords ++ st.javanme.keywords).map(_.toString)
 
@@ -26,7 +27,7 @@ object Rules {
       .map(_.split("\\.").find(reservedWords.contains))
       .flatMap {
         case Some(b) => IO.fail(MatchError(reservedWordError(b)))
-        case None    => IO.succeed(s)
+        case None => IO.succeed(s)
       }
   }
 
