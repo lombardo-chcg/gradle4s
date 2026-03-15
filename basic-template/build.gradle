@@ -1,19 +1,21 @@
 plugins {
     id "scala"
     // test runner for scalatest
-    id "com.github.maiflai.scalatest" version "0.25"
+    id "com.github.maiflai.scalatest" version "0.33"
     // create a "fat jar" similar to the sbt assembly plugin
-    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "com.gradleup.shadow" version "9.3.2"
     // make application runnable from the terminal with a `run` task
     id "application"
 }
 
 // inform the 'application' plugin where the app entry point is located
-mainClassName = "com.starter.Main"
+application {
+    mainClass = "com.starter.Main"
+}
 
 shadowJar {
     // creates a fat jar at build/libs/scala-gradle-starter-all.jar
-    baseName = "scala-gradle-starter"
+    archiveBaseName.set("scala-gradle-starter")
 }
 
 repositories {
@@ -21,21 +23,25 @@ repositories {
 }
 
 ext {
-    scalaVersion = "2.12.8"
+    scalaVersion = "2.12.19"
     scalacVersion = "2.12"
     log4jVersion = "2.9.1"
 }
 
 dependencies {
-    compile "org.scala-lang:scala-library:$scalaVersion"
-    compile "org.scala-lang:scala-reflect:$scalaVersion"
+    implementation "org.scala-lang:scala-library:$scalaVersion"
+    implementation "org.scala-lang:scala-reflect:$scalaVersion"
 
     // logging
-    compile "org.apache.logging.log4j:log4j-api:$log4jVersion"
-    runtime "org.apache.logging.log4j:log4j-core:$log4jVersion"
-    runtime "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
+    implementation "org.apache.logging.log4j:log4j-api:$log4jVersion"
+    runtimeOnly "org.apache.logging.log4j:log4j-core:$log4jVersion"
+    runtimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion"
 
     // test
-    testCompile "org.scalatest:scalatest_$scalacVersion:3.0.1"
-    testRuntime "org.pegdown:pegdown:1.4.2" // used by scalatest plugin to generate html reports
+    testImplementation "org.scalatest:scalatest_$scalacVersion:3.0.1"
+    testRuntimeOnly "org.pegdown:pegdown:1.4.2" // used by scalatest plugin to generate html reports
+}
+
+test {
+    jvmArgs "--add-opens", "java.base/java.lang=ALL-UNNAMED"
 }
