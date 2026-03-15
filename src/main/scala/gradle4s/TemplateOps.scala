@@ -12,7 +12,13 @@ object TemplateOps {
   def transform(u: UserRequest): ZIO[Console, Throwable, UserRequest] = IO.effect {
     os.walk(u.path)
       .filter(f => os.isFile(f) && !ignoredFileSet.contains(f.last))
-      .map(f => (f, os.read.lines(f)))
+      .flatMap(f => {
+        try {
+          Some((f, os.read.lines(f)))
+        } catch {
+          case _: java.nio.charset.MalformedInputException => None // Skip binary files
+        }
+      })
       .map {
         case (file, lines) =>
           val translatedLines = lines

@@ -15,6 +15,6 @@ object FileSys {
   def cpTemplate(path: os.Path): Task[Unit] = IO.effect(os.copy(templateDir, path))
 
   def runShellCommand(path: os.Path, cmd: Array[String]): Task[Unit] = IO.effect {
-    os.proc(cmd).call(cwd = path)
+    os.proc(cmd).call(cwd = path, stdin = os.Inherit, stdout = os.Inherit, stderr = os.Inherit)
   }
 }
